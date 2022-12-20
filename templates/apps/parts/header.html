@@ -1,0 +1,92 @@
+{% load static %}
+{% csrf_token %}
+<header class="theme-default">
+    <div id="search-box">
+        <div class="container" style="margin-bottom: 10px">
+            <form action="{% url 'blog' %}" method="get">
+                <label>
+                    <input type="text" id="user-input" placeholder="Searching for posts" name="filter"/>
+                </label>
+                <button type="submit" id="search-icon"><i class="fas fa-arrow-right"></i></button>
+            </form>
+            <ul class="list-group d-none style-2" id="replaceable-content" style="border: none"></ul>
+        </div>
+    </div>
+    <div class="container">
+        <div class="header-wrapper">
+            <a class="header__logo" href="{% url 'index' %}"><img src="{% static 'apps/assets/images/logo1.png' %}"
+                                                                  alt="Logo"/></a>
+            <nav>
+                <ul>
+                    <li class="nav-item {% if request.path == '/' %}active{% endif %}"><a
+                            href="{% url 'index' %}">Home</a></li>
+                    <li class="nav-item {% if request.path == '/blog' %}active{% endif %}">
+                        <a href="{% url 'blog' %}">Blog</a>
+                        <!-- Blog category drop down -->
+                        <ul class="dropdown-menu">
+                            {% for category in categories %}
+                                <li><a href="{% url 'blog' %}?category={{ category.slug }}">{{ category.name }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    <li class="nav-item {% if request.path == '/about' %}active{% endif %}">
+                        <a href="{% url 'about' %}">About</a>
+                    </li>
+                    <li class="nav-item {% if request.path == '/contact' %}active{% endif %}">
+                        <a href="{% url 'contact' %}">Contact</a></li>
+                    {% if not user.is_anonymous and not helper_buttons %}
+                        <li class="nav-item {% if request.path == '/dashboard' %}active{% endif %}">
+                            <a href="{% url 'create_post' %}">Create Post</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+            <!-- Social Icons -->
+            <div class="header__icon-group">
+                <a href="#" id="search"><i class="fas fa-search"></i></a>
+                <div class="social">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-telegram"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    {% if not user.is_anonymous %}
+                        <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            <i class="far fa-user-circle"></i>
+                        </a>
+                        <div class="dropdown-menu show" style="width: 10%;"
+                             x-placement="bottom-start">
+                            <div class="dropdown-item">
+                                <a href="{% url 'profile' 'me' %}" style="display: flex;align-items: center;">
+                                    <i class="far fa-file-alt"></i>
+                                    <p style="font-weight: 500; margin-left: 5px;">Posts</p>
+                                </a>
+                            </div>
+                            <div class="dropdown-item">
+                                <a href="{% url 'profile' 'me' %}" class="dropdown-item"
+                                   style="display: flex;align-items: center; width: 100%">
+                                    <i class="far fa-user"></i>
+                                    <p style="font-weight: 500; margin-left: 5px;">Profile</p>
+                                </a>
+                            </div>
+                            <hr>
+                            <button type="button" class="dropdown-item">
+                                <i class="far fa-sign-out">
+                                    <a href="{% url 'logout' %}" style="font-weight: 500; margin-left: 5px;">Logout</a></i>
+                            </button>
+                        </div>
+                        <a id="mobile-menu-controller" href="#"><i class="fas fa-bars"></i></a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row">
+                {% if user.is_anonymous %}
+                    <div class="col-12 col-sm-4 ml-3">
+                        <a class="btn -normal" href="{% url 'register' %}">signup</a>
+                    </div>
+                {% endif %}
+                {% if helper_buttons %}
+                    {{ helper_buttons|safe }}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</header>

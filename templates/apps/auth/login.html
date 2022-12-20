@@ -1,0 +1,41 @@
+{% extends 'apps/auth/base.html' %}
+{% load static %}
+{% load apps_extras %}
+{% block title %}
+    Login
+{% endblock %}
+{% block content %}
+    <div class="wrapper">
+        {{ form.errors }}
+        <div class="logo">
+            <img src="{% static 'apps/assets/images/favicon.png' %}" alt="">
+        </div>
+        <div class="text-center mt-4 name">
+            FUSE - auth
+        </div>
+        <form class="p-3 mt-3" action="{% url 'login' %}" method="post">
+            {% csrf_token %}
+            <div class="form-field d-flex align-items-center pl-4">
+                <span class="far fa-user"></span>
+                <label>
+                    <input type="text" name="username" id="userName" placeholder="Username"/>
+                </label>
+            </div>
+            <div class="form-field d-flex align-items-center pl-4">
+                <span class="fas fa-key"></span>
+                <label>
+                    <input type="password" name="password" id="pwd" placeholder="Password"/>
+                </label>
+            </div>
+            <label>
+                <input name="next_page" value="{{ request|next_page }}" hidden/>
+            </label>
+            <button class="btn mt-3">Login</button>
+        </form>
+        {% include 'apps/auth/social.html' %}
+        <div class="text-center fs-6">
+            <a href="{% url 'forget_password' %}">Forget password?</a> or <a href="{% url 'register' %}">Sign up</a>
+        </div>
+
+    </div>
+{% endblock %}

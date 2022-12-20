@@ -1,0 +1,55 @@
+<div class="col-12 col-md-5 col-lg-4 order-md-2">
+    <div class="blog-sidebar">
+        <div class="blog-sidebar-section -category">
+            <div class="center-line-title">
+                <!-- Blog category sidebar -->
+                <h5>Categories</h5>
+            </div>
+            {% for category in categories %}
+                <div class="opacity-bar category">
+                    <a class="category -bar text-decoration-none" href="{% url 'blog' %}?category={{ category.slug }}">
+                        <!--Category 1::Background Image size is 340 x 80   -->
+                        <div class="category__background"
+                             style="background-image: url({{ category.image.url }})"></div>
+                        <h5 class="title">{{ category.name }}</h5>
+                        <h5 class="quantity">{{ category.post_count }}</h5></a>
+                </div>
+            {% endfor %}
+
+        </div>
+        <!-- Trending Post Side Bar Section-->
+        <div class="blog-sidebar-section -trending-post">
+            <div class="center-line-title">
+                <h5>Trending post</h5>
+            </div>
+            <!--Trending Post 1 -->
+            {% for index, post in trending_posts %}
+                <div class="trending-post">
+                    <div class="trending-post_image">
+                        <div class="rank">{{ index }}</div>
+                        <!--Img size is 100 x 100 -->
+                        <img src="{{ post.image.url }}"
+                             alt="{{ post.title }}" width="100px" height="100px"/>
+                    </div>
+                    <div class="trending-post_content">
+                        <!-- Category Header -->
+                        {% for ctg in post.category.all %}
+                            <h5>{{ ctg.name }}</h5>
+                        {% endfor %}
+                        <a href="{% url 'post' post.slug %}">{{ post.title }}</a>
+                        <div class="info__time"><i class="far fa-clock"></i>
+                            <p>{{ post.created_at }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <!-- Subscribe Form -->
+        <form class="subcribe-box subcribe-box" action="/" method="POST">
+            <h5>Subcribe</h5>
+            <p>Lorem ipsum dolor amet, consectetur adipiscing elit, sed tempor.</p>
+            <input placeholder="Your email" name="email" type="email"/>
+            <a class="btn -normal" href="#">Subcribe</a>
+        </form>
+    </div>
+</div>

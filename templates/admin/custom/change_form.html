@@ -1,0 +1,31 @@
+{% extends 'admin/change_form.html' %}
+{% load static %}
+{% load apps_extras %}
+{% block extrastyle %}
+    {{ block.super }}
+{% endblock %}
+
+{% block submit_buttons_bottom %}
+    <div id="content" class="colM">
+
+        <h1>Answer To Message</h1>
+        <div id="content-main">
+            <form enctype="multipart/form-data" method="post">
+                <label>
+                    <textarea name="message" id="editor2" cols="192" rows="20"></textarea>
+                </label>
+                <input type="submit" value="Submit123" class="default">
+                <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+                <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+                <script>
+                    CKEDITOR.replace('editor2', {
+                        width: "100%",
+                    });
+                </script>
+            </form>
+        </div>
+
+
+        <br class="clear">
+    </div>
+{% endblock %}

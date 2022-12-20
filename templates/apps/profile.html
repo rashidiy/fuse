@@ -1,0 +1,151 @@
+{% extends 'apps/parts/base.html' %}
+{% load static %}
+{% block title %}
+    Profile | Settings
+{% endblock %}
+{% block main_content %}
+    <div id="snippetContent">
+        <div class="container">
+            <div class="row gutters">
+                <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <div class="account-settings">
+                                <div class="user-profile">
+                                    <div class="user-avatar"><img
+                                            src="{{ s_user.avatar.url }}" alt="Maxwell Admin">
+                                    </div>
+                                    <h5 class="user-name">{{ s_user.username }}</h5><h6
+                                        class="user-email">{{ s_user.email }}</h6>
+                                </div>
+                                <div class="about"><h5>Bio</h5>
+                                    <p>{{ s_user.bio }}</p></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <form action="{% url 'profile' 'me' %}" method="post" enctype="multipart/form-data">
+                                {{ form.errors }}
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 m-2"><h6
+                                            class="mb-2 input-title">
+                                        Profile Image</h6></div>
+                                    <div class="mb-3">
+                                        <label for="formFile" class="form-label ml-2">Select profile image</label>
+                                        <input name="avatar" class="form-control" type="file" accept="image/*">
+                                    </div>
+                                </div>
+                                <div class="row gutters">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 m-2"><h6
+                                            class="mb-2 input-title">
+                                        Personal Details</h6></div>
+
+                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mb-3">
+                                        <div class="input-group flex-nowrap">
+                                            <input name="first_name" type="text" class="form-control"
+                                                   placeholder="FirstName" value="{{ s_user.first_name }}"
+                                                   aria-describedby="addon-wrapping">
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mb-3">
+                                        <div class="input-group flex-nowrap">
+                                            <input name="last_name" type="text" class="form-control"
+                                                   placeholder="LastName" value="{{ s_user.last_name }}"
+                                                   aria-describedby="addon-wrapping">
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mb-3">
+                                        <div class="input-group flex-nowrap">
+                                            <span class="input-group-text" id="addon-wrapping">@</span>
+                                            <input name="username" type="text" class="form-control"
+                                                   placeholder="Username" value="{{ s_user.username }}"
+                                                   aria-describedby="addon-wrapping">
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mb-3">
+                                        <div class="input-group flex-nowrap">
+                                            <span class="input-group-text" id="addon-wrapping">+998</span>
+                                            <input name="phone" id="phone" type="text" class="form-control"
+                                                   placeholder="PhoneNumber"
+                                                   aria-describedby="addon-wrapping">
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-6 col-12 mb-3">
+                                        <div class="input-group flex-nowrap">
+                                            <input name="email" type="text" class="form-control" placeholder="Email"
+                                                   value="{{ s_user.email }}" aria-describedby="addon-wrapping">
+                                            <span class="input-group-text" id="addon-wrapping">@gmail.com</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-6 col-12 mb-3">
+                                        <div class="form-floating">
+                                        <textarea name="bio" class="form-control" placeholder="Leave a comment here"
+                                                  id="floatingTextarea2"
+                                                  style="height: 100px">{{ s_user.bio }}</textarea>
+                                            <label for="floatingTextarea2">Bio: write something about yourself</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row gutters">
+                                    <div class="btn-group" role="group">
+                                        <button type="submit" class="btn">Saqlash</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <form action="{% url 'change_password' %}" method="post">
+                                {{ form.errors }}
+                                <div class="row">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-2"><h6
+                                            class="mb-2 input-title">
+                                        Change Password</h6></div>
+                                    {% csrf_token %}
+                                    <div class="mb-3">
+                                        <label for="formFile" class="form-label ml-2">Your old password</label>
+                                        <input name="old_password" class="form-control" type="text"
+                                               placeholder="OldPassword">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="formFile" class="form-label ml-2">New Password</label>
+                                        <input name="new_password1" class="form-control" type="password"
+                                               placeholder="NewPassword">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="formFile" class="form-label ml-2">ConfirmPassword</label>
+                                        <input name="new_password2" class="form-control" type="password"
+                                               placeholder="ConfirmPassword">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="btn-group" role="group">
+                                        <button type="submit" class="btn">Saqlash</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <link rel="stylesheet" href="{% static 'apps/assets/css/profile_css.css' %}">
+        <script src="https://unpkg.com/imask@6.4.3/dist/imask.js"></script>
+        <script type="text/javascript">
+            let phone = document.getElementById('phone')
+            console.log(phone)
+            let maskOptions = {
+                mask: '(00)000-00-00',
+                lazy: false
+            }
+            let mask = new IMask(phone, maskOptions);
+        </script>
+    </div>
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends 'apps/auth/base.html' %}
+{% load static %}
+{% block title %}
+    Login
+{% endblock %}
+{% block content %}
+    <div class="wrapper" style="max-width: 570px">
+        {{ form.errors }}
+        <div class="logo">
+            <img src="{% static 'apps/assets/images/favicon.png' %}" alt="">
+        </div>
+        <div class="text-center mt-4 name">
+            FUSE - auth
+        </div>
+        <form class="p-3 mt-3" method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col">
+                    <div class="form-field d-flex align-items-center pl-4">
+                        <span class="far fa-file-signature"></span>
+                        <label>
+                            <input type="text" name="first_name" id="first_name" placeholder="First Name"/>
+                        </label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-field d-flex align-items-center pl-4">
+                        <span class="far fa-file-signature"></span>
+                        <label>
+                            <input type="text" name="last_name" id="last_name" placeholder="Last Name"/>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-field d-flex align-items-center pl-4">
+                        <span class="far fa-user"></span>
+                        <label>
+                            <input type="text" name="username" id="username" placeholder="Username"/>
+                        </label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-field d-flex align-items-center pl-4">
+                        <span class="far fa-envelope"></span>
+                        <label>
+                            <input type="email" name="email" id="email" placeholder="Email"/>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-field d-flex align-items-center pl-4">
+                        <span class="far fa-key"></span>
+                        <label>
+                            <input type="password" name="password" id="password" placeholder="Password"/>
+                        </label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-field d-flex align-items-center pl-4">
+                        <span class="far fa-key"></span>
+                        <label>
+                            <input type="password" name="verify_password" id="verify_password"
+                                   placeholder="Verify Password"/>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <button class="btn mt-3">Sign UP</button>
+        </form>
+        {% include 'apps/auth/social.html' %}
+        <div class="text-center fs-6 text-muted">
+            If you have early registered, <a href="{% url 'login' %}">Log in</a>
+        </div>
+    </div>
+{% endblock %}

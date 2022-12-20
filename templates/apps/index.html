@@ -1,0 +1,87 @@
+{% extends 'apps/parts/base.html' %}
+{% load static %}
+{% block title %}IndexPage{% endblock %}
+{% block main_content %}
+    <div class="container">
+        <div class="blog-with-sidebar">
+            <div class="row">
+                <!-- Right side bar starts here which contains the Category & Trending Post -->
+                {% include 'apps/parts/blog-sidebar.html' %}
+                <!--- End of Right Side Bar ----->
+
+                <div class="col-12 col-md-7 col-lg-8 order-md-1">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-12 ">
+                            <div class="post-card -full -center">
+                                <a class="card__cover" href="{% url 'post' last_post.slug %}">
+                                    <img src="{{ last_post.image.url }}"
+                                         alt="Getting started with DevOps automation"/>
+                                </a>
+                                <div class="card__content">
+                                    <!-- Content Category -->
+                                    <h5 class="card__content-category">{{ last_post.category.first.name }}</h5>
+                                    <!-- Content Heading -->
+                                    <a class="card__content-title"
+                                       href="{% url 'post' last_post.slug %}">{{ last_post.title }}</a>
+                                    <div class="card__content-info">
+                                        <!-- Content Author -->
+                                        <div class="info__time info__author"><i class="far fa-user"></i>
+                                            <p>{{ last_post.user.username }}</p>
+                                        </div>
+                                        <!-- Content Time and Date -->
+                                        <div class="info__time"><i class="far fa-clock"></i>
+                                            <p>{{ last_post.created_at }}</p>
+                                        </div>
+                                        <!-- Comments -->
+                                        <div class="info__comment"><i class="far fa-comment"></i>
+                                            <p>{{ last_post.comment_count }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="news-block__content -default">
+                            <div class="news-block__content__slide">
+                                <div class="row">
+                                    <div class="col-12" id="card">
+                                        <div class="row">
+                                            {% for post in posts %}
+                                                <div class="col-12 col-sm-6">
+                                                    <div class="post-card -small">
+                                                        <a class="card__cover" href="{% url 'post' post.slug %}">
+                                                            <!-- img size 370 x 247 -->
+                                                            <img src="{{ post.image.url }}"
+                                                                 alt="Why You Should Be Using React"/></a>
+                                                        <!-- Post content -->
+                                                        <div class="card__content">
+                                                            {% for ctg in post.category.all %}
+                                                                <h5 class="card__content-category">{{ ctg.name }}</h5>
+                                                            {% endfor %}
+                                                            <a class="card__content-title"
+                                                               href="{% url 'post' post.slug %}">{{ post.title }}</a>
+                                                            <div class="card__content-info">
+                                                                <div class="info__time"><i class="far fa-clock"></i>
+                                                                    <p>{{ post.created_at }}</p>
+                                                                </div>
+                                                                <div class="info__comment"><i
+                                                                        class="far fa-comment"></i>
+                                                                    <p>{{ post.comment_count }}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <a class="btn -normal" id="read-more-posts" STYLE="margin: auto;" href="{% url 'blog' %}">show
+                            more
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>{% endblock %}

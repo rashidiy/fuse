@@ -1,0 +1,57 @@
+{% extends 'apps/parts/base.html' %}
+{% load static %}
+
+{% block title %}Contact{% endblock %}
+
+{% block main_content %}
+    <div class="container">
+        <div class="breadcrumb">
+            <ul>
+                <li><a href="{% url 'index' %}"> <i class="fas fa-home"></i>Home</a></li>
+                <li class="active"><a href="#">Contact us</a></li>
+            </ul>
+        </div>
+        <div class="contact-us">
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <div class="contact-us__info">
+                        <h3 class="contact-title">GET IN TOUCH</h3>
+                        <p class="contact-description">{{ description }}</p>
+                        <div class="contact-method">
+                            <div class="contact-method__item"><i class="fas fa-map-marker-alt"></i>
+                                <p>{{ location }}</p>
+                            </div>
+                            <div class="contact-method__item"><i class="fas fa-mobile-alt"></i>
+                                <p>{{ phone_number }}</p>
+                            </div>
+                            <div class="contact-method__item"><i class="far fa-envelope-open"></i>
+                                <p>{{ email }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contact-us__social">
+                        <h3 class="contact-title">Follow us on social</h3>
+                        <div class="social-block"><a href="#"><i class="fab fa-linkedin"></i></a><a href="#"><i
+                                class="fab fa-twitter"></i></a><a href="#"><i class="fab fa-github"></i></a><a
+                                href="#"><i class="fab fa-telegram"></i></a></div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="contact-us__form">
+                        <h3 class="contact-title">LEAVE A MESSAGE</h3>
+                        <form action="{% url 'contact' %}" method="post">
+                            {{ form.errors }}
+                            {% csrf_token %}
+                            <input type="text" name="username" value="{{ user.username }}" hidden>
+                            <input type="text" placeholder="About" name="about">
+                            <input type="email" placeholder="Email" name="email" value="{{ user.email }}" readonly>
+                            <textarea name="message" cols="30" rows="8" placeholder="Message"></textarea>
+                            <button class="btn -normal">Send message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include 'apps/parts/subscribe_bar.html' %}
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends 'admin/base.html' %}
+{% load static %}
+{% block branding %}
+    <a href="{% url 'index' %}"><img src="{% static 'apps/assets/images/favicon.png' %}" width="50px"
+                                     style="border: 1px solid #fff; border-radius: 999px;"></a>
+{% endblock %}
+{% block extrastyle %}{{ block.super }}
+    <style>
+        * {
+            font-family: "Nimbus Mono PS", sans-serif;
+        }
+
+        :root {
+            --primary: #1F1C1D;
+            --secondary: #1F1C1D;
+            --link-fg: #2F2C2D;
+            --link-selected-fg: #01ecb2;
+        }
+
+        body {
+            background-color: #eee;
+            background-image: url("{% static 'apps/images/storyenimage.png' %}");
+            background-size: cover;
+            background-position: center center;
+        }
+
+        .content div {
+            border-radius: 6px;
+        }
+
+        #nav-sidebar input, #searchbar input {
+            border-radius: 6px;
+            margin: 18px 1% !important;
+            width: 98% !important;
+            padding-top: 2.3% !important;
+            font-family: "Nimbus Mono PS", sans-serif;
+
+        }
+
+        #changelist-form {
+            width: 100%;
+        }
+
+        .results {
+            width: 101.28% !important;
+        }
+
+        #nav-sidebar {
+            padding-right: 5px;
+            box-shadow: 7px 0 5px -2px #888;
+            transition: .3s;
+        }
+
+        caption {
+            border-radius: 5px;
+        }
+
+        div {
+            opacity: 8 !important;
+        }
+    </style>
+{% endblock %}
+
+{% block extrahead %}
+    {{ block.super }}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            let movementStrength = 25;
+            let height = movementStrength / $(window).height();
+            let width = movementStrength / $(window).width();
+            $("body").mousemove(function (e) {
+                let pageX = e.pageX - ($(window).width() / 2);
+                let pageY = e.pageY - ($(window).height() / 2);
+                let newvalueX = width * pageX * -1 - 100;
+                let newvalueY = height * pageY * -1 - 200;
+                $('body').css("background-position", newvalueX + "px     " + newvalueY + "px");
+            });
+        });
+    </script>
+{% endblock %}

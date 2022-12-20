@@ -1,0 +1,57 @@
+{% extends 'apps/parts/base.html' %}
+{% load static %}
+
+{% block title %}
+    About
+{% endblock %}
+
+{% block main_content %}
+    <div class="no-pd" id="content">
+        <div class="container">
+            <div class="breadcrumb">
+                <ul>
+                    <li>
+                        <a href="{% url 'index' %}"> <i class="fas fa-home"></i>Home</a>
+                    </li>
+                    <li class="active">
+                        <a href="#">About</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="about-us">
+                <div class="row align-items-center">
+                    <div class="col-12 col-sm-8 col-md-6 mx-auto">
+                        <!-- image size 560 x 522 -->
+                        <div class="about-us__image">
+                            <img src="{% static 'apps/assets/images/posts/about.png' %}" alt="About us image"/>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="about-us__content">
+                            <h3>Thank you for visit out my website.</h3>
+                            <p>Bemorga g'amxo'rlik qilish, shifokor tomonidan kuzatilishi muhim, ammo bu juda og'riqli
+                                va azobli vaqt. Kim o'zi basketbolni to'xtatdi? Kulgi - ko'l qatlamlarini chizishning
+                                yaxshi usuli.</p>
+                            <p>Ammo zavqni ayblovchi va og'riqni maqtaganlarning bunchalik tug'ma xatosini qaerdan
+                                ko'rishingiz uchun men hamma narsani ochib beraman va o'sha haqiqat kashfiyotchisi va
+                                go'yo arxitektor aytgan so'zlarni tushuntiraman. baxtli hayot. Zero, hech kim rohatning
+                                o‘zidan nafratlanmaydi, nafratlanmaydi yoki undan qochmaydi, balki uning oqibati katta
+                                azoblarga sabab bo‘lgani uchun, baxtli hayot oson yoki oson, deyiladi.
+
+                            </p>
+                            <div class="follow">
+                                <p>Follow us:</p>
+                                <div class="social-block">
+                                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                                    <a href="#"><i class="fab fa-telegram"></i></a>
+                                    <a href="#"><i class="fab fa-github"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include 'apps/parts/subscribe_bar.html' %}
+{% endblock %}
