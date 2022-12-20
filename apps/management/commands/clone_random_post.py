@@ -37,6 +37,3 @@ class Command(BaseCommand):
             )
             post.category.add(category)
             post.save()
-
-
-
