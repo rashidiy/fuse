@@ -272,3 +272,8 @@ class PdfGenerateView(DetailView):
         }
         pdf = render_to_pdf('apps/post_pdf.html', data)
         return HttpResponse(pdf, content_type='application/pdf')
+
+"""
+
+
+"""
