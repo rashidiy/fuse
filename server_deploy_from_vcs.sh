@@ -14,7 +14,6 @@ project_port=$4 # port
 # Allow Given Post
 ufw allow $project_port
 
-# Go to working directory then create project name folder
 cd /var/www/
 mkdir $project_name
 
