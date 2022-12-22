@@ -17,7 +17,8 @@ def context_category(request: WSGIRequest):
         'email': 'bubbless7456@gmail.com',
         'description': "Bemorni davolash juda muhim, bemorni bemor kuzatib boradi, lekin ayni paytda ba'zi "
                        "katta og'riqlar bilan. Kim batareyaning batareyasini yoki oson bo'lganlarni to'xtatib qo'ydi.",
-        'feature_posts': Post.actives.filter(user__is_superuser=True)[:3]
+        'feature_posts': Post.actives.filter(user__is_superuser=True)[:3],
+        'footer_categories': Category.objects.all()[:6]
     }
 
 

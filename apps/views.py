@@ -58,9 +58,7 @@ class ActivateAccountView(View):
             user.save()
             login(request, user)
             return redirect('index')
-        # else:
-        #     invalid link
-        # return render(request, 'registration/invalid.html')
+        return redirect('index')
 
 
 class ResetPasswordView(PasswordResetConfirmView):
@@ -79,7 +77,7 @@ class IndexView(ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         data = super().get_context_data(object_list=object_list, **kwargs)
         data['last_post'] = Post.actives.order_by('-created_at').first()
-        data['posts'] = Post.actives.order_by('-created_at')[:4]
+        data['posts'] = Post.actives.order_by('-created_at')[1:5]
         data['all_posts'] = Post.actives.order_by('-created_at')
         data['all_posts'] = Post.actives.order_by('-created_at')
         return data
@@ -92,27 +90,36 @@ class AboutView(ListView):
 
 class BlogView(ListView):
     template_name = 'apps/blog-category.html'
-    queryset = Post.actives
+    queryset = Post.actives.all()
+    context_object_name = 'category_posts'
+    paginate_by = 6
 
     def get_context_data(self, *, object_list=None, **kwargs):
         data = super().get_context_data(object_list=object_list, **kwargs)
-        request = self.request
-        if request.method == 'GET':
-            if request.GET:
-                filter_ = request.GET.get('filter')
-                if filter_:
-                    posts = Post.actives.order_by('-created_at').filter(status='active', title__icontains=filter_)
-                else:
-                    posts = Post.actives.order_by('-created_at').filter(
-                        status='active',
-                        category__slug=request.GET.get('category'))
-            else:
-                posts = Post.actives.order_by('-created_at')[:6]
-            data['category'] = Category.objects.filter(slug=self.request.GET.get('category')).first() or None
-            p = (int(request.GET.get('page', 1) or 1) - 1) * 6
-            data['category_posts'] = posts[p:p + 6]
-            data['posts_count'] = [i + 1 for i in range(len(posts) // 6 + 1)]
+        category = Category.objects.filter(slug=self.request.GET.get('category')).first() or None
+        pagination = data['page_obj']
+        paginator = pagination.paginator
+        page = pagination.number
+        left = (int(page) - 4)
+        if left < 1:
+            left = 1
+        right = (int(page) + 5)
+        if right > paginator.num_pages:
+            right = paginator.num_pages + 1
+        data['pagination_range'] = range(left, right)
+        data['category'] = category
         return data
+
+    def get_queryset(self):
+        filter_ = self.request.GET.get('filter')
+        if filter_:
+            posts = Post.actives.order_by('-created_at').filter(title__icontains=filter_)
+        elif self.request.GET.get('category'):
+            posts = Post.actives.order_by('-created_at').filter(
+                category__slug=self.request.GET.get('category'))
+        else:
+            posts = Post.actives.all()
+        return posts
 
 
 class ContactView(LoginRequiredMixin, CreateView):

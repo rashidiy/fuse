@@ -1,16 +1,27 @@
 from django import template
 from django.core.handlers.wsgi import WSGIRequest
+from django.utils.html import format_html
+from rest_framework.reverse import reverse_lazy
 
 register = template.Library()
 
 
 @register.filter
-def is_page(request: WSGIRequest, page):
+def get_page_circle(request: WSGIRequest, page):
     """Check page is active """
     if request.method == "GET":
-        site_page = int(request.GET.get('page') or 1)
-        return site_page == page
-    return False
+        site_page = request.GET.get('page', 1)
+        other_methods = ''.join([f"&{i}={v}" for i, v in dict(request.GET).items() if i != 'page'])
+        blog = reverse_lazy("blog")
+        if page == site_page:
+            circle = format_html('<li class="active">'
+                                 f'<a href="{blog}?page={page}{other_methods}">{page}</a>'
+                                 '</li>')
+        else:
+            circle = format_html('<li class="pagination__page-number">'
+                                 f'<a href="{blog}?page={page}{other_methods}">{page}</a>'
+                                 '</li>')
+        return circle
 
 
 @register.filter

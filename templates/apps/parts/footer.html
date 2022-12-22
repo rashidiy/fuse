@@ -31,7 +31,8 @@
                                     </a>
                                     <div class="card__content">
                                         <h5 class="card__content-category">Open source</h5>
-                                        <a class="card__content-title" href="{% url 'post' post.slug %}">{{ post.title }}</a>
+                                        <a class="card__content-title"
+                                           href="{% url 'post' post.slug %}">{{ post.title }}</a>
                                         <div class="card__content-info">
                                             <div class="info__time"><i class="far fa-clock"></i>
                                                 <p>{{ post.created_at }}</p>
@@ -49,14 +50,12 @@
                             <!-- Blog Tags -->
                             <div class="col-12 col-md-6 col-lg-12">
                                 <div class="center-line-title">
-                                    <h5>Blog Tags</h5>
+                                    <h5>Categories</h5>
                                 </div>
                                 <div class="tags-group"><a class="tag-btn" href="{% url 'blog' %}">Fuse</a>
-                                    <a class="tag-btn" href="{% url 'blog' %}">Web Development</a>
-                                    <a class="tag-btn" href="{% url 'blog' %}">Ui / Ux</a>
-                                    <a class="tag-btn" href="{% url 'blog' %}">Open source</a>
-                                    <a class="tag-btn" href="{% url 'blog' %}">Productivity</a>
-                                    <a class="tag-btn" href="{% url 'blog' %}">Github</a>
+                                    {% for footer_category in footer_categories %}
+                                        <a class="tag-btn" href="{% url 'blog' %}?category={{ footer_category.slug }}">{{ footer_category.name }}</a>
+                                    {% endfor %}
                                 </div>
                             </div>
                             <!-- Social Media -->
@@ -64,9 +63,11 @@
                                 <div class="center-line-title">
                                     <h5>Follow us</h5>
                                 </div>
-                                <div class="social-block"><a href="#"><i class="fab fa-linkedin"></i></a>
-                                    <a href="#"><i class="fab fa-telegram"></i></a>
-                                    <a href="#"><i class="fab fa-github"></i></a>
+                                <div class="social-block">
+                                    <a href="https://www.linkedin.com/in/rashideveloper/"><i
+                                            class="fab fa-linkedin"></i></a>
+                                    <a href="https://rashideveloper.t.me"><i class="fab fa-telegram"></i></a>
+                                    <a href="https://github.com/rashideveloperr"><i class="fab fa-github"></i></a>
                                     <a href="#"><i class="fab fa-dribbble"></i></a>
                                 </div>
                             </div>

@@ -31,7 +31,9 @@ class Command(BaseCommand):
             post = Post.objects.create(
                 title=f"{fake.name()} & {fake.name()}",
                 image=image,
-                body=f"<p>{fake.text()}<br><br>{fake.text()}<br><br>{fake.text()}</p>",
+                body=f"<p>{fake.text()}<br>{fake.text()}<br>{fake.text()}<br>"
+                     f"<br>{fake.text()}<br>{fake.text()}<br>{fake.text()}<br>"
+                     f"<br>{fake.text()}<br>{fake.text()}<br>{fake.text()}</p>",
                 user_id=user.pk,
                 status='active',
             )

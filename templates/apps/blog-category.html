@@ -56,25 +56,31 @@
                             </div>
                         </div>
                     {% endfor %}
-                    {% if posts_count.lenght > 1 %}
-                        <div class="pagination">
-                            <ul>
-                                {% for page in posts_count %}
-                                    {% if request|is_page:page %}
-                                        <li class="active">
-                                            <a href="{% url 'blog' %}?category={{ category.slug }}&page={{ page }}">{{ page }}</a>
-                                        </li>
-                                    {% else %}
-                                        <li class="pagination__page-number">
-                                            <a href="{% url 'blog' %}?category={{ category.slug }}&page={{ page }}">{{ page }}</a>
-                                        </li>
-                                    {% endif %}
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    {% endif %}
+                    <div class="pagination">
+                        <ul>
+                            {% if page_obj.has_previous %}
+                                <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+                            {% else %}
+                                {#                                                                        <li class="disabled"><a>&laquo;</a></li>#}
+                            {% endif %}
+                            {% for i in pagination_range %}
+                                {% if page_obj.number == i %}
+                                    <li class="active"><a>{{ i }}</a>
+                                    </li>
+                                {% else %}
+                                    <li><a href="?page={{ i }}">{{ i }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+                            {% if page_obj.has_next %}
+                                <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+                            {% else %}
+                                {#                                    <li class="disabled"><a>&raquo;</a></li>#}
+                            {% endif %}
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 {% endblock %}
