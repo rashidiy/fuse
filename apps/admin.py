@@ -52,10 +52,14 @@ class CommentAdmin(ModelAdmin):
 
 @admin.register(Post)
 class PostAdmin(ModelAdmin):
-    list_display = ('title', 'created_at', 'categories', 'status_icons', 'buttons', 'preview')
+    list_display = ('title', 'created_at', 'categories', 'status_icons', 'buttons', 'preview', 'make_pdf')
     exclude = ('slug', 'status')
     search_fields = ('title',)
     list_filter = ('status', 'category')
+
+    def make_pdf(self, obj):
+        return format_html(
+            f'<a href="/post_pdf/{obj.id}"><input type="button" style="background-color: #4bbda6;" value="Make PDF"></a>')
 
     def get_urls(self):
         urls = super().get_urls()

@@ -23,10 +23,10 @@
                 <h5>Trending post</h5>
             </div>
             <!--Trending Post 1 -->
-            {% for index, post in trending_posts %}
+            {% for post in trending_posts %}
                 <div class="trending-post">
                     <div class="trending-post_image">
-                        <div class="rank">{{ index }}</div>
+                        <div class="rank">{{ forloop.counter }}</div>
                         <!--Img size is 100 x 100 -->
                         <img src="{{ post.image.url }}"
                              alt="{{ post.title }}" width="100px" height="100px"/>

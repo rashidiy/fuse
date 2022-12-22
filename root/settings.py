@@ -36,6 +36,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.github',
     'allauth.socialaccount.providers.telegram',
+
+    'qr_code',
 ]
 SITE_ID = 1
 
@@ -83,7 +85,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'apps.context_processors.context_category'
+                'apps.context_processors.context_category',
+                'apps.context_processors.context_trending_post',
             ],
         },
     },

@@ -1,10 +1,8 @@
-import os
 from glob import glob
 from random import choice
 
-from django_resized import ResizedImageField
-from faker import Faker
 from django.core.management import BaseCommand
+from faker import Faker
 
 from apps.models import Post, Category
 
@@ -20,6 +18,7 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         total = kwargs['total']
         images = glob("medias/post/*/*.png")
+        print(images)
         if not images:
             raise 'Images Not Fount as "medias/post/*/*.png"'
         categories = Category.objects.all()
@@ -29,9 +28,9 @@ class Command(BaseCommand):
         for i in range(total):
             category = choice(categories)
             post = Post.objects.create(
-                title=fake.name(),
-                image=ResizedImageField(),
-                body=f"<p>{fake.text()}</p>",
+                title=f"{fake.name()} & {fake.name()}",
+                image=choice(images)[7:],
+                body=f"<p>{fake.text()}<br><br>{fake.text()}<br><br>{fake.text()}</p>",
                 user_id=1,
                 status='active',
             )

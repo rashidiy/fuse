@@ -1,15 +1,18 @@
+from datetime import timedelta
+
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.contrib.auth.models import AbstractUser
 from django.db.models import TextField, JSONField, Model, ForeignKey, DateTimeField, CharField, SlugField, \
     CASCADE, RESTRICT, \
     BooleanField, IntegerField, ManyToManyField, SET_DEFAULT, EmailField, Manager
 from django.utils.text import slugify
+from django.utils.timezone import now
 from django_resized import ResizedImageField
 
 
 class ActivePostManager(Manager):
     def get_queryset(self):
-        return super().get_queryset().filter(is_active=True)
+        return super().get_queryset().filter(status='active')
 
 
 class User(AbstractUser):
@@ -23,8 +26,6 @@ class User(AbstractUser):
     def save(self, *args, **kwargs):
         self.username = self.username.lower()
         return super(User, self).save(*args, **kwargs)
-
-    # actives = ActiveUsersManager()
 
     class Meta:
         verbose_name = 'Foydalanuvchi'  # noqa
@@ -60,7 +61,8 @@ class Post(Model):
     status = CharField(max_length=50, default='pending',
                        choices=[('active', 'ACTIVE'), ('pending', 'PENDING'), ('restrict', 'CANCEL')])
     image = ResizedImageField(size=[1500, 790], crop=['middle', 'center'], upload_to='post/%m')
-    views_count = IntegerField(default=0)
+    actives = ActivePostManager()
+    objects = Manager()
 
     def slug_generator(self):
         slug = slugify(self.title)
@@ -85,6 +87,10 @@ class Post(Model):
     @property
     def comment_count(self):
         return self.comment_set.count()
+
+    @property
+    def views_count(self):
+        return self.views_set.count()
 
     def __str__(self):
         return self.title
@@ -123,3 +129,9 @@ class Contact(Model):
     class Meta:
         verbose_name = 'Ariza'  # noqa
         verbose_name_plural = 'Arizalar'  # noqa
+
+
+class Views(Model):
+    post = ForeignKey(Post, CASCADE)
+    user = ForeignKey(User, CASCADE)
+    seen_at = DateTimeField(auto_now_add=True)

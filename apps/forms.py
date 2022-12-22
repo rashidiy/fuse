@@ -5,7 +5,7 @@ from django.core.exceptions import ValidationError
 from django.forms import CharField, ModelForm, PasswordInput, Form, EmailField
 from django.views.generic import TemplateView
 
-from apps.models import User, Post, Contact
+from apps.models import User, Post, Contact, Comment
 
 
 class LoginPageForm(AuthenticationForm):
@@ -76,3 +76,8 @@ class ForgetPasswordForm(Form):
 class UserPasswordResetView(TemplateView):
     template_name = 'apps/auth/reset_password.html'
 
+
+class CommentForm(ModelForm):
+    class Meta:
+        model = Comment
+        exclude = ('created_at', 'like_count')

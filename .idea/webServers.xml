@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="b97e4822-cf9b-49e4-92f4-2ef15da721eb" name="My SERVER 2">
+        <fileTransfer rootFolder="/root/DJANGO" accessType="SFTP" host="217.18.62.222" port="22" sshConfigId="75835c97-5c30-4b8c-841f-ae8e5bc4e6dd" sshConfig="root@217.18.62.222:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
